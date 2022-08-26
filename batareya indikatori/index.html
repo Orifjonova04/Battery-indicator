@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Battery indicator with JavaScript</title>
+</head>
+<body>
+
+    <div class="section">
+        <div class="card">
+            <div class="batteryShape">
+                <div class="batteryBorder">
+                    <div class="percetage"></div>
+                </div>
+                <div class="percent"></div>
+                <p class="isCharging"></p>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        navigator.getBattery().then(battery => {
+            let  percetage = document.querySelector(".percetage");
+            let  percent = document.querySelector(".percent");
+            let  isCharging = document.querySelector(".isCharging");
+
+            function updateAllBatteryInfo(){
+            updateChargeInfo();
+            updateLevelInfo();
+           }
+             updateAllBatteryInfo()
+
+            function updateLevelInfo(){
+                percetage.style.width = battery.level * 100 + '%';
+                percent.innerHTML = battery.level * 100 + '%';
+            }
+
+            function updateChargeInfo(){
+                isCharging.innerHTML = battery.charging ? "Your devise charging" : "";
+            }
+            battery.addEventListener("levelchange", () => {
+                updateLevelInfo()
+            })
+
+            battery.addEventListener("charginchange", () => {
+                updateChargeInfo()
+            })
+            
+        })
+    </script>
+    
+</body>
+</html>
